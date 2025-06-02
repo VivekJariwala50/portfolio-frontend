@@ -1,0 +1,21 @@
+.vj-card {
+  padding: 16px;
+  border-radius: 12px;
+  background-color: var(--dim-black);
+  height: 100%;
+  width: 100%;
+}
+
+@media (max-width: 991px) {
+  .vj-card {
+    padding: 12px;
+    border-radius: 8px;
+  }
+}
+
+@media (max-width: 767px) {
+  .vj-card {
+    padding: 8px;
+    border-radius: 4px;
+  }
+}

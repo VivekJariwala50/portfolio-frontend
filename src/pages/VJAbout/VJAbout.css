@@ -1,0 +1,34 @@
+.about-section {
+  padding: 12rem 0 12rem 0;
+}
+
+.content-container {
+  max-width: 60%;
+  margin: auto;
+}
+
+.experience-container .experience-wrapper:not(:last-of-type) {
+  margin-bottom: 3.4rem;
+}
+
+.experience-wrapper {
+  text-transform: uppercase;
+}
+
+@media (max-width: 1199px) {
+  .content-container {
+    max-width: 70%;
+  }
+}
+
+@media (max-width: 575px) {
+  .content-container {
+    max-width: 80%;
+  }
+}
+
+@media (max-width: 480px) {
+  .content-container {
+    max-width: 95%;
+  }
+}

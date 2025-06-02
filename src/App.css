@@ -1,0 +1,397 @@
+/* FONT FACES START */
+@font-face {
+  font-family: "Spectral";
+  src: url("./assets/fonts/Spectral-Bold.woff2") format("woff2"),
+    url("./assets/fonts/Spectral-Bold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Spectral";
+  src: url("./assets/fonts/Spectral-SemiBold.woff2") format("woff2"),
+    url("./assets/fonts/Spectral-SemiBold.woff") format("woff");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Spectral";
+  src: url("./assets/fonts/Spectral-ExtraBold.woff2") format("woff2"),
+    url("./assets/fonts/Spectral-ExtraBold.woff") format("woff");
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Spectral";
+  src: url("./assets/fonts/Spectral-ExtraLight.woff2") format("woff2"),
+    url("./assets/fonts/Spectral-ExtraLight.woff") format("woff");
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Spectral";
+  src: url("./assets/fonts/Spectral-Light.woff2") format("woff2"),
+    url("./assets/fonts/Spectral-Light.woff") format("woff");
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Spectral";
+  src: url("./assets/fonts/Spectral-Medium.woff2") format("woff2"),
+    url("./assets/fonts/Spectral-Medium.woff") format("woff");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Spectral";
+  src: url("./assets/fonts/Spectral-Regular.woff2") format("woff2"),
+    url("./assets/fonts/Spectral-Regular.woff") format("woff");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* FONT FACES END */
+
+:root {
+  /* COLORS */
+  --clr-white: #ffffff;
+  --clr-black: #000000;
+  --dim-black: #333333;
+  --clr-gray: #9b9b9b;
+  --dark-gray: #636363;
+  --clr-red: #fa1919;
+  --dim-gray: #808080;
+  --gray-secondary: #7a7a7a;
+  /* COLORS  */
+  --font-spectral: "Spectral", Georgia, "Times New Roman", serif;
+  --font-roboto: "Roboto", Helvetica, Arial, sans-serif;
+  --transition-all: all 0.3s;
+  --header-height: 10.684rem;
+}
+
+/* GLOBALS START */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--clr-white);
+  font-size: 14px;
+  font-family: var(--font-roboto);
+  font-weight: 500;
+  transition: var(--transition-all);
+  color: var(--clr-black);
+  line-height: 1.5;
+}
+
+html {
+  font-size: 10px;
+}
+
+.container {
+  max-width: 100%;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+.font-spectral {
+  font-family: var(--font-spectral);
+}
+
+.font-roboto {
+  font-family: var(--font-roboto);
+}
+
+.ls-1 {
+  letter-spacing: 1px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.p,
+p {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-weight: 500;
+  line-height: 1.5;
+}
+/* GLOBALS END */
+
+/* FONT SIZES START */
+h1,
+.h1 {
+  font-size: 4rem;
+}
+
+h1.small,
+.h1.small {
+  font-size: 5rem;
+}
+
+.h2.big,
+h2.big {
+  font-size: 4.4rem;
+}
+
+h2,
+.h2 {
+  font-size: 2.6rem;
+}
+
+h2.small,
+.h2.small {
+  font-size: 2.4rem;
+}
+
+h3,
+.h3 {
+  font-size: 20px;
+}
+
+h3.small,
+.h3.small {
+  font-size: 18px;
+}
+
+h4,
+.h4,
+p.big,
+.p.big {
+  font-size: 16px;
+}
+
+h4.small,
+.h4.small,
+p {
+  font-size: 14px;
+}
+
+h5,
+.h5,
+p.small,
+.p.small,
+span {
+  font-size: 12px;
+}
+
+h6,
+.h6 {
+  font-size: 10px;
+}
+
+/* FONT SIZES END */
+
+/* TEXT COLOR START */
+.blank {
+  color: var(--clr-black);
+}
+
+.white {
+  color: var(--clr-white);
+}
+
+.dim-black {
+  color: var(--dim-black);
+}
+
+.red {
+  color: var(--clr-red);
+}
+
+.gray {
+  color: var(--clr-gray);
+}
+
+.dark-gray {
+  color: var(--dark-gray);
+}
+
+.dim-gray {
+  color: var(--dim-gray);
+}
+
+.gray-secondary {
+  color: var(--gray-secondary);
+}
+/* TEXT COLOR END */
+
+/* BG COLOR START */
+.bg-blank {
+  background-color: var(--clr-black);
+}
+
+.bg-white {
+  background-color: var(--clr-white);
+}
+
+.bg-dim-black {
+  background-color: var(--dim-black);
+}
+
+.bg-red {
+  background-color: var(--clr-red);
+}
+
+.bg-gray {
+  background-color: var(--clr-gray);
+}
+
+.bg-dark-gray {
+  background-color: var(--dark-gray);
+}
+
+.bg-dim-gray {
+  background-color: var(--dim-gray);
+}
+
+.bg-gray-secondary {
+  background-color: var(--gray-secondary);
+}
+/* BG COLOR END */
+
+/* RESPONSIVE START */
+/* Small devices (landscape phones, 576px and up) */
+@media (min-width: 576px) {
+  .container {
+    max-width: 540px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Medium devices (tablets, 768px and up) */
+@media (min-width: 768px) {
+  .container {
+    max-width: 720px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Large devices (desktops, 992px and up) */
+@media (min-width: 992px) {
+  .container {
+    max-width: 960px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Extra large devices (large desktops, 1200px and up) */
+@media (min-width: 1200px) {
+  .container {
+    max-width: 1140px;
+  }
+}
+
+/* Extra extra large devices (larger desktops, 1400px and up) */
+@media (min-width: 1400px) {
+  .container {
+    max-width: 1320px;
+  }
+}
+
+/* Ultra-Wide HD (≥1600px) */
+@media (min-width: 1600px) {
+  .container {
+    max-width: 1440px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+/* Full HD+ (≥1920px) */
+@media (min-width: 1920px) {
+  .container {
+    max-width: 1680px;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+@media (max-width: 1799px) {
+}
+
+@media (max-width: 1599px) {
+  html {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 1399px) {
+}
+
+@media (max-width: 1279px) {
+  html {
+    font-size: 7px;
+  }
+
+  h3.small,
+  .h3.small {
+    font-size: 16px;
+  }
+}
+
+@media (max-width: 991px) {
+  html {
+    font-size: 6px;
+  }
+  h3.small,
+  .h3.small {
+    font-size: 14px;
+  }
+
+  h4,
+  .h4,
+  p.big,
+  .p.big {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 767px) {
+  html {
+    font-size: 5.5px;
+  }
+  :root {
+    --header-height: 106px;
+  }
+}
+
+@media (max-width: 575px) {
+}
+
+@media (max-width: 480px) {
+  h1.small,
+  .h1.small {
+    font-size: 3.5rem;
+  }
+}
+/* RESPONSIVE END */
