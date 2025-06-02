@@ -1,7 +1,7 @@
 import { Layout } from "../components/Layout";
 import VJAbout from "../pages/VJAbout";
 import VJContact from "../pages/VJContact";
-import VJHome from "../pages/vjHome";
+import VJHome from "../pages/VJHome";
 import VJProjectDetails from "../pages/VJProjectDetails";
 import { createBrowserRouter } from "react-router-dom";
 
