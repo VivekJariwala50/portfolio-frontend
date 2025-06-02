@@ -8,30 +8,67 @@ import "./VJHome.css";
 const VJHome = () => {
   const [projects, setProjects] = useState([]);
   const [skills, setSkills] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const apiUrl = import.meta.env.VITE_STRAPI_URL;
+  const maxRetries = 3;
+  const retryDelay = 2000; // 2 seconds
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (attempt = 1) => {
       try {
         const [projectsRes, skillsRes] = await Promise.all([
           axios.get(`${apiUrl}/api/vivek-jariwalas?populate=backgroundImg`),
           axios.get(`${apiUrl}/api/skills`),
         ]);
 
+        // Check if data is valid
+        if (
+          !projectsRes.data.data ||
+          !Array.isArray(projectsRes.data.data) ||
+          !skillsRes.data.data ||
+          !Array.isArray(skillsRes.data.data)
+        ) {
+          throw new Error("Invalid data received from API");
+        }
+
         const sortedProjects = [...(projectsRes.data.data || [])].sort(
           (a, b) => parseInt(a.Number) - parseInt(b.Number)
         );
         setProjects(sortedProjects);
         setSkills(skillsRes.data.data || []);
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        setProjects([]);
-        setSkills([]);
+        setError(null);
+        setLoading(false);
+      } catch (err) {
+        console.error(`Attempt ${attempt} failed:`, err.message);
+        if (attempt < maxRetries) {
+          // Retry after delay
+          setTimeout(() => fetchData(attempt + 1), retryDelay);
+        } else {
+          setError(
+            "Failed to load projects and skills. Please try again later."
+          );
+          setProjects([]);
+          setSkills([]);
+          setLoading(false);
+        }
       }
     };
 
     fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="container error-message">{error}</div>;
+  }
 
   return (
     <>

@@ -6,15 +6,28 @@ const VJAbout = () => {
   const [experiences, setExperiences] = useState([]);
   const [educations, setEducations] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
   const apiUrl = import.meta.env.VITE_STRAPI_URL;
+  const maxRetries = 3;
+  const retryDelay = 2000; // 2 seconds
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async (attempt = 1) => {
       try {
         const [expRes, eduRes] = await Promise.all([
           axios.get(`${apiUrl}/api/experiences`),
           axios.get(`${apiUrl}/api/educations`),
         ]);
+
+        // Validate data
+        if (
+          !expRes.data.data ||
+          !Array.isArray(expRes.data.data) ||
+          !eduRes.data.data ||
+          !Array.isArray(eduRes.data.data)
+        ) {
+          throw new Error("Invalid data received from API");
+        }
 
         const sortByRange = (data) =>
           [...data].sort((a, b) => {
@@ -24,15 +37,37 @@ const VJAbout = () => {
 
         setExperiences(sortByRange(expRes.data.data || []));
         setEducations(sortByRange(eduRes.data.data || []));
-      } catch (error) {
-        console.error("Error fetching data:", error);
-      } finally {
+        setError(null);
         setLoading(false);
+      } catch (error) {
+        console.error(`Attempt ${attempt} failed:`, error.message);
+        if (attempt < maxRetries) {
+          setTimeout(() => fetchData(attempt + 1), retryDelay);
+        } else {
+          setError(
+            "Failed to load experiences and educations. Please try again later."
+          );
+          setExperiences([]);
+          setEducations([]);
+          setLoading(false);
+        }
       }
     };
 
     fetchData();
   }, []);
+
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div className="container error-message">{error}</div>;
+  }
 
   const renderSection = (title, items, renderItem) => (
     <div className="mb-5">
@@ -45,8 +80,7 @@ const VJAbout = () => {
     <section className="about-section">
       <div className="container">
         <div className="content-container">
-          {!loading &&
-            experiences.length > 0 &&
+          {experiences.length > 0 &&
             renderSection("Experience", experiences, (exp, index) => (
               <div className="experience-wrapper" key={index}>
                 <h3 className="small dim-black fw-bold mb-3">
@@ -60,8 +94,7 @@ const VJAbout = () => {
             ))}
 
           <div className="text-end">
-            {!loading &&
-              educations.length > 0 &&
+            {educations.length > 0 &&
               renderSection("Education", educations, (edu, index) => (
                 <div className="experience-wrapper" key={index}>
                   <h3 className="small dim-black fw-bold mb-3">

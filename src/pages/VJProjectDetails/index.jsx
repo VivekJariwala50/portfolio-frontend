@@ -9,46 +9,74 @@ const VJProjectDetails = () => {
   const [project, setProject] = useState(null);
   const [otherProjects, setOtherProjects] = useState([]);
   const [error, setError] = useState(null);
+  const [loading, setLoading] = useState(true);
   const apiUrl = import.meta.env.VITE_STRAPI_URL;
+  const maxRetries = 3;
+  const retryDelay = 2000; // 2 seconds
 
   useEffect(() => {
-    axios
-      .get(
-        `${apiUrl}/api/vivek-jariwalas/${id}?populate=backgroundImg&populate=CoverImg`
-      )
-      .then((response) => {
-        console.log("Single project response:", response);
-        setProject(response.data.data || null);
-        setError(null);
-      })
-      .catch((error) => {
-        console.error("Error fetching project:", error.message, error.response);
-        setError(
-          error.response?.status === 404
-            ? `Project with ID ${id} not found.`
-            : error.message
-        );
-        setProject(null);
-      });
+    const fetchData = async (attempt = 1) => {
+      try {
+        const [projectRes, otherProjectsRes] = await Promise.all([
+          axios.get(
+            `${apiUrl}/api/vivek-jariwalas/${id}?populate=backgroundImg&populate=CoverImg`
+          ),
+          axios.get(`${apiUrl}/api/vivek-jariwalas?populate=backgroundImg`),
+        ]);
 
-    axios
-      .get(`${apiUrl}/api/vivek-jariwalas?populate=backgroundImg`)
-      .then((response) => {
-        const projects = response.data.data || [];
-        setOtherProjects(projects.filter((proj) => proj.documentId !== id));
-      })
-      .catch((error) => {
-        console.error("Error fetching other projects:", error);
-        setOtherProjects([]);
-      });
+        // Validate data
+        if (!projectRes.data.data) {
+          throw new Error(`Project with ID ${id} not found`);
+        }
+        if (
+          !otherProjectsRes.data.data ||
+          !Array.isArray(otherProjectsRes.data.data)
+        ) {
+          throw new Error("Invalid data for other projects");
+        }
+
+        setProject(projectRes.data.data);
+        setOtherProjects(
+          otherProjectsRes.data.data.filter((proj) => proj.documentId !== id)
+        );
+        setError(null);
+        setLoading(false);
+      } catch (err) {
+        console.error(`Attempt ${attempt} failed:`, err.message);
+        if (attempt < maxRetries) {
+          setTimeout(() => fetchData(attempt + 1), retryDelay);
+        } else {
+          setError(
+            err.response?.status === 404
+              ? `Project with ID ${id} not found`
+              : "Failed to load project details. Please try again later."
+          );
+          setProject(null);
+          setOtherProjects([]);
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchData();
   }, [id]);
 
+  if (loading) {
+    return (
+      <div className="loader-container">
+        <div className="spinner"></div>
+      </div>
+    );
+  }
+
   if (error) {
-    return <div className="container">Error: {error}</div>;
+    return <div className="container error-message">{error}</div>;
   }
 
   if (!project) {
-    return <div className="container">Loading or invalid project...</div>;
+    return (
+      <div className="container error-message">No project data available</div>
+    );
   }
 
   const imageUrl =
@@ -95,7 +123,6 @@ const VJProjectDetails = () => {
             Visit {project.Title || "Untitled Project"}
           </a>
           <div className="content-wrap">
-            {/* Display the first cover image */}
             {project.CoverImg &&
               Array.isArray(project.CoverImg) &&
               project.CoverImg.length > 0 && (
@@ -117,7 +144,6 @@ const VJProjectDetails = () => {
                 <b>Technologies:</b> {project.Technologies || "None specified"}
               </p>
             </div>
-            {/* Display the remaining cover images (excluding the first) */}
             {project.CoverImg &&
               Array.isArray(project.CoverImg) &&
               project.CoverImg.length > 1 &&
@@ -125,7 +151,7 @@ const VJProjectDetails = () => {
                 <img
                   key={index}
                   src={`${apiUrl}${img.url}`}
-                  alt={img.name || `Cover ${index + 2}`} // Start numbering from 2
+                  alt={img.name || `Cover ${index + 2}`}
                   width="100%"
                   height="100%"
                   className="mb-3"
