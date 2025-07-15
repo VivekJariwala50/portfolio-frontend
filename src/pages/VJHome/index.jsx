@@ -126,7 +126,7 @@ const VJHome = () => {
       )}
 
       <a
-        href="mailto:vj84491n@pace.edu"
+        href="mailto:vivekjariwala50@gmail.com"
         className="sticky-email text-decoration-none"
       >
         <div className="email-icon">
