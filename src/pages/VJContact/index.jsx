@@ -9,10 +9,10 @@ const VJContact = () => {
             Vivek Jariwala.
           </h1>
           <a
-            href="mailto:vj84491n@pace.edu"
+            href="mailto:vivekjariwala50@gmail.com"
             className="h3 small d-block text-center"
           >
-            vj84491n@pace.edu
+            vivekjariwala50@gmail.com
           </a>
         </div>
       </section>
