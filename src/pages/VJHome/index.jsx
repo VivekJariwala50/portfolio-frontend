@@ -33,7 +33,7 @@ const VJHome = () => {
         }
 
         const sortedProjects = [...(projectsRes.data.data || [])].sort(
-          (a, b) => parseInt(a.Number) - parseInt(b.Number)
+          (a, b) => parseInt(a.Number) - parseInt(b.Number),
         );
         setProjects(sortedProjects);
         setSkills(skillsRes.data.data || []);
@@ -46,7 +46,7 @@ const VJHome = () => {
           setTimeout(() => fetchData(attempt + 1), retryDelay);
         } else {
           setError(
-            "Failed to load projects and skills. Please try again later."
+            "Failed to load projects and skills. Please try again later.",
           );
           setProjects([]);
           setSkills([]);
@@ -77,7 +77,7 @@ const VJHome = () => {
           <h1 className="font-spectral fw-medium hero-text">
             Software Engineer,
           </h1>
-          <h2 className="font-spectral fw-bold hero-text">Data Analyst</h2>
+          <h2 className="font-spectral fw-bold hero-text">FullStack Dev.</h2>
           <h3 className="small fw-light dim-gray mt-4 ls-1">
             M.S. in Computer Science — Class of 2026
           </h3>
