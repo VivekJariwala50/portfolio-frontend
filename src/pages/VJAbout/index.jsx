@@ -9,7 +9,7 @@ const VJAbout = () => {
   const [error, setError] = useState(null);
   const apiUrl = import.meta.env.VITE_STRAPI_URL;
   const maxRetries = 3;
-  const retryDelay = 2000; // 2 seconds
+  const retryDelay = 2000;
 
   useEffect(() => {
     const fetchData = async (attempt = 1) => {
@@ -45,7 +45,7 @@ const VJAbout = () => {
           setTimeout(() => fetchData(attempt + 1), retryDelay);
         } else {
           setError(
-            "Failed to load experiences and educations. Please try again later."
+            "Failed to load experiences and educations. Please try again later.",
           );
           setExperiences([]);
           setEducations([]);
